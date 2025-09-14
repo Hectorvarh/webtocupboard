@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToCupboard - Organización y Estilo para tu Cocina</title>
+    <!-- Favicon actualizado a icono.png -->
+    <link rel="icon" type="image/png" href="images/icono.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .hero-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('images/ordem.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .modal-backdrop {
+            background-color: rgba(0,0,0,0.6);
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+
+    <!-- Header & Navbar -->
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-3xl font-serif text-stone-900">ToCupboard</a>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#inicio" class="text-stone-600 hover:text-orange-600 transition duration-300">Inicio</a>
+                <a href="#sobre-nosotros" class="text-stone-600 hover:text-orange-600 transition duration-300">Nosotros</a>
+                <a href="#productos" class="text-stone-600 hover:text-orange-600 transition duration-300">Productos</a>
+                <a href="#contacto" class="text-stone-600 hover:text-orange-600 transition duration-300">Contacto</a>
+            </div>
+            <button id="cart-button" class="relative">
+                <i data-lucide="shopping-cart" class="text-stone-600"></i>
+                <span id="cart-count" class="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">0</span>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Sección Inicio (Hero) -->
+        <section id="inicio" class="hero-bg text-white">
+            <div class="container mx-auto px-6 text-center py-32 md:py-40">
+                <h1 class="text-4xl md:text-6xl font-serif mb-4">El Orden Empieza en tu Cocina</h1>
+                <p class="text-lg text-stone-200 mb-8 max-w-2xl mx-auto">Soluciones de organización que combinan diseño, funcionalidad y calidad para transformar tu espacio.</p>
+                <a href="#productos" class="bg-orange-500 text-white font-bold px-8 py-3 rounded-lg hover:bg-orange-600 transition-transform transform hover:scale-105 duration-300 shadow-lg">Ver Colección</a>
+            </div>
+        </section>
+
+        <!-- Sección Sobre Nosotros -->
+        <section id="sobre-nosotros" class="py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <!-- Columna de Texto (Izquierda) -->
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-serif text-stone-900 mb-2">Sobre Nosotros</h2>
+                        <p class="text-lg text-orange-600 font-semibold mb-6">Conoce más sobre nuestra misión y valores</p>
+                        <h3 class="text-2xl font-bold text-stone-800 mb-4">Nuestra Historia</h3>
+                        <div class="space-y-4 text-stone-600 leading-relaxed">
+                            <p>
+                                ToCupboard nació en 2015 con la visión de revolucionar la organización en las cocinas modernas. Nuestro fundador, un chef profesional, se cansó de la falta de soluciones prácticas para mantener los espacios culinarios ordenados y eficientes.
+                            </p>
+                            <p>
+                                Hoy, después de años de investigación y desarrollo, ofrecemos una línea de productos que combina funcionalidad, durabilidad y diseño contemporáneo. Cada artículo está pensado para maximizar el espacio y simplificar tu experiencia culinaria.
+                            </p>
+                            <p>
+                                Nuestro compromiso es con la calidad, la innovación y la satisfacción total de nuestros clientes.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Columna de Imagen (Derecha) -->
+                    <div class="mt-8 md:mt-0">
+                        <img src="images/organizado.png" alt="Cocina organizada con productos ToCupboard" class="rounded-lg shadow-xl w-full h-auto object-cover" onerror="this.onerror=null;this.src='https://placehold.co/800x600/F9F5F0/6D4C41?text=organizado.png';">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Productos -->
+        <section id="productos" class="py-24 bg-stone-100">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-serif text-center text-stone-900 mb-12">Productos Destacados</h2>
+                <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Loader -->
+                    <div id="products-loader" class="col-span-full text-center py-10">
+                        <div role="status" class="flex justify-center items-center space-x-2">
+                           <svg class="h-8 w-8 text-orange-500 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8
+ 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                           <span class="text-lg text-stone-600">Cargando productos...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Contacto -->
+        <section id="contacto" class="py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                     <h2 class="text-3xl md:text-4xl font-serif text-stone-900 mb-4">¿Tienes Alguna Duda?</h2>
+                     <p class="text-stone-600 max-w-xl mx-auto">Nos encantaría escucharte. Completa el formulario y nuestro equipo te contactará a la brevedad.</p>
+                </div>
+                <div class="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-lg border border-stone-100">
+                    <form id="contact-form">
+                        <div class="mb-5">
+                            <label for="name" class="block text-stone-700 font-medium mb-2">Nombre</label>
+                            <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 transition" required>
+                        </div>
+                        <div class="mb-5">
+                            <label for="email" class="block text-stone-700 font-medium mb-2">Email</label>
+                            <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 transition" required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block text-stone-700 font-medium mb-2">Mensaje</label>
+                            <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 transition" required></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-stone-800 text-white font-bold py-3 rounded-lg hover:bg-stone-900 transition duration-300">
+                            Enviar Mensaje
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-stone-900 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 ToCupboard. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    
+    <!-- Modal del Carrito -->
+    <div id="cart-modal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-backdrop fixed inset-0" onclick="toggleModal(document.getElementById('cart-modal'), false)"></div>
+        <div class="relative w-full max-w-lg mx-auto mt-20 bg-white rounded-lg shadow-lg">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6 border-b pb-4">
+                    <h3 class="text-2xl font-serif">Tu Carrito</h3>
+                    <button id="close-cart-modal" class="text-stone-500 hover:text-stone-800 transition">&times;</button>
+                </div>
+                <div id="cart-items" class="divide-y divide-stone-200 mb-4 max-h-80 overflow-y-auto">
+                    <!-- Items del carrito -->
+                </div>
+                <div class="flex justify-between items-center font-bold text-lg pt-4 border-t">
+                    <span>Total:</span>
+                    <span id="cart-total">$0.00</span>
+                </div>
+                <button id="checkout-button" class="w-full mt-6 bg-green-600 text-white font-bold py-3 rounded-lg hover:bg-green-700 transition duration-300 disabled:bg-stone-400 disabled:cursor-not-allowed">
+                    Proceder al Pago
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Pago Simulado -->
+    <div id="payment-modal" class="fixed inset-0 z-50 hidden">
+        <div class="modal-backdrop fixed inset-0"></div>
+        <div class="relative w-full max-w-md mx-auto mt-20 bg-white rounded-lg shadow-lg">
+            <div class="p-6">
+                <h3 class="text-2xl font-serif mb-4">Simulación de Pago Seguro</h3>
+                <p class="text-sm text-stone-500 mb-6">Estás en un entorno de prueba. No uses datos reales.</p>
+                <form id="payment-form">
+                    <div class="mb-4">
+                        <label for="card-number" class="block text-stone-700 font-medium mb-2">Número de Tarjeta</label>
+                        <input type="text" id="card-number" placeholder="4242 4242 4242 4242" class="w-full px-4 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400" required>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div>
+                            <label for="expiry-date" class="block text-stone-700 font-medium mb-2">Expiración</label>
+                            <input type="text" id="expiry-date" placeholder="MM/YY" class="w-full px-4 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400" required>
+                        </div>
+                        <div>
+                            <label for="cvv" class="block text-stone-700 font-medium mb-2">CVV</label>
+                            <input type="text" id="cvv" placeholder="123" class="w-full px-4 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full bg-orange-500 text-white font-bold py-3 rounded-lg hover:bg-orange-600 transition duration-300">
+                        Pagar Ahora
+                    </button>
+                    <button type="button" id="cancel-payment" class="w-full mt-3 text-center text-stone-600 hover:text-stone-800 transition">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenedor de Alertas/Notificaciones -->
+    <div id="alert-container" class="fixed top-5 right-5 z-[100] w-80"></div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Inicializar iconos
+        lucide.createIcons();
+
+        // --- DATOS DE PRODUCTOS (LOCALES) ---
+        // Volvemos a usar tu lista de productos original.
+        const mockProducts = [
+            { id: 1, title: 'Set de Contenedores Herméticos', price: 39.99, image: 'images/Set%20de%20Contenedores%20.png' },
+            { id: 2, title: 'Organizador de Sartenes Ajustable', price: 24.50, image: 'images/Organizador%20de%20Sarte.png' },
+            { id: 3, title: 'Dispensador de Especias Giratorio', price: 19.95, image: 'images/Dispensador%20de%20Espec.png' },
+            { id: 4, title: 'Escurridor de Platos de Bambú', price: 29.99, image: 'images/Escurridor%20de%20Platos.png' },
+            { id: 5, title: 'Cesto de Basura con Sensor', price: 79.90, image: 'images/Cesto%20de%20Basura.png' },
+            { id: 6, title: 'Juego de Utensilios de Silicona', price: 34.00, image: 'images/Juego%20de%20Utensilios%20.png' },
+            { id: 7, title: 'Estantería Magnética para Refri', price: 22.80, image: 'images/Estanteria%20Magnetica.png' },
+            { id: 8, title: 'Tabla de Cortar con Contenedores', price: 45.50, image: 'images/Tabla%20de%20Cortar.png' }
+        ];
+
+        // Estado de la aplicación
+        let products = [];
+        let cart = [];
+
+        // --- Selectores del DOM ---
+        const productList = document.getElementById('product-list');
+        const productsLoader = document.getElementById('products-loader');
+        const cartButton = document.getElementById('cart-button');
+        const cartModal = document.getElementById('cart-modal');
+        const closeCartModalButton = document.getElementById('close-cart-modal');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartTotalEl = document.getElementById('cart-total');
+        const cartCountEl = document.getElementById('cart-count');
+        const checkoutButton = document.getElementById('checkout-button');
+        const paymentModal = document.getElementById('payment-modal');
+        const cancelPaymentButton = document.getElementById('cancel-payment');
+        const contactForm = document.getElementById('contact-form');
+        const paymentForm = document.getElementById('payment-form');
+        const alertContainer = document.getElementById('alert-container');
+
+        // --- Lógica de Alertas ---
+        const showAlert = (message, type = 'success') => {
+            const colors = {
+                success: 'bg-green-600',
+                error: 'bg-red-600',
+                info: 'bg-blue-600'
+            };
+            const alertEl = document.createElement('div');
+            alertEl.className = `p-4 rounded-lg text-white ${colors[type]} shadow-lg mb-2 transition-all duration-500 transform translate-x-full ease-out`;
+            alertEl.textContent = message;
+            alertContainer.appendChild(alertEl);
+            
+            setTimeout(() => {
+                alertEl.classList.remove('translate-x-full');
+            }, 10);
+            
+            setTimeout(() => {
+                alertEl.style.opacity = '0';
+                alertEl.style.transform = 'translateX(100%)';
+                setTimeout(() => alertEl.remove(), 500);
+            }, 4000);
+        };
+
+        // --- Lógica de API (Simulada) ---
+        const fetchAndRenderProducts = async () => {
+             // Simulamos una pequeña demora para mantener el efecto de "cargando"
+            setTimeout(() => {
+                try {
+                    products = mockProducts;
+                    renderProducts();
+                } catch (error) {
+                    console.error("Error al cargar productos locales:", error);
+                    showAlert('No se pudieron cargar los productos.', 'error');
+                } finally {
+                    if(productsLoader) productsLoader.style.display = 'none';
+                }
+            }, 500); // 0.5 segundos de demora
+        };
+        
+        const submitContactForm = async (formData) => {
+            try {
+                const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+                    method: 'POST',
+                    body: JSON.stringify(formData),
+                    headers: { 'Content-Type': 'application/json' },
+                });
+                if (!response.ok) throw new Error('Error al enviar el formulario.');
+                showAlert('¡Mensaje enviado con éxito!', 'success');
+                contactForm.reset();
+            } catch (error) {
+                showAlert('Hubo un problema al enviar tu mensaje.', 'error');
+            }
+        };
+
+        // --- Lógica de Renderizado ---
+        const renderProducts = () => {
+            productList.innerHTML = '';
+            products.forEach(product => {
+                const productCard = `
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col group transition-shadow duration-300 hover:shadow-xl">
+                        <div class="overflow-hidden bg-stone-100">
+                           <img src="${product.image}" alt="${product.title}" class="w-full h-56 object-contain group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null;this.src='https://placehold.co/600x600/F9F5F0/6D4C41?text=Imagen+no+encontrada';">
+                        </div>
+                        <div class="p-4 flex flex-col flex-grow">
+                            <h3 class="text-lg font-semibold mb-2 text-stone-800">${product.title}</h3>
+                            <p class="text-stone-700 mb-4 font-bold text-xl">$${product.price.toFixed(2)}</p>
+                            <div class="mt-auto">
+                                <button data-product-id="${product.id}" class="add-to-cart-btn w-full bg-stone-800 text-white font-bold py-2 rounded-lg hover:bg-orange-500 transition duration-300">
+                                    Añadir al Carrito
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                productList.innerHTML += productCard;
+            });
+        };
+
+        const renderCart = () => {
+            cartItemsContainer.innerHTML = '';
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="text-stone-500 text-center py-4">Tu carrito está vacío.</p>';
+                checkoutButton.disabled = true;
+            } else {
+                checkoutButton.disabled = false;
+                cart.forEach(item => {
+                    const cartItem = `
+                        <div class="flex items-center justify-between py-3">
+                            <img src="${item.image}" class="w-16 h-16 object-contain rounded-md mr-4 bg-stone-100" onerror="this.onerror=null;this.src='https://placehold.co/100x100/F9F5F0/6D4C41?text=Img';">
+                            <div class="flex-grow">
+                                <p class="font-semibold truncate w-60">${item.title}</p>
+                                <p class="text-sm text-stone-500">${item.quantity} x $${item.price.toFixed(2)}</p>
+                            </div>
+                            <div class="font-bold text-right">$${(item.quantity * item.price).toFixed(2)}</div>
+                        </div>
+                    `;
+                    cartItemsContainer.innerHTML += cartItem;
+                });
+            }
+
+            const total = cart.reduce((sum, item) => sum + (item.quantity * item.price), 0);
+            cartTotalEl.textContent = `$${total.toFixed(2)}`;
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCountEl.textContent = totalItems;
+            cartCountEl.classList.toggle('scale-125', totalItems > 0);
+            setTimeout(() => cartCountEl.classList.remove('scale-125'), 200);
+
+        };
+
+        // --- Lógica del Carrito ---
+        const addToCart = (productId) => {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const existingItem = cart.find(item => item.id === productId);
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            showAlert(`${product.title} añadido.`, 'info');
+            renderCart();
+        };
+
+        // --- Lógica de Modales ---
+        const toggleModal = (modal, show) => {
+            if (show) {
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        };
+
+        // --- Lógica de Pasarela de Pagos (Simulada) ---
+        const handlePayment = (e) => {
+            e.preventDefault();
+            const cardNumber = document.getElementById('card-number').value;
+            const expiryDate = document.getElementById('expiry-date').value;
+            const cvv = document.getElementById('cvv').value;
+
+            if (!/^\d{4}\s\d{4}\s\d{4}\s\d{4}$/.test(cardNumber) || !/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiryDate) || !/^\d{3}$/.test(cvv)) {
+                showAlert('Por favor, revisa los datos de tu tarjeta.', 'error');
+                return;
+            }
+
+            const paymentToken = `tok_sim_${Date.now()}`;
+            console.log("Token de pago simulado:", paymentToken);
+            
+            setTimeout(() => {
+                toggleModal(paymentModal, false);
+                showAlert('¡Pago realizado con éxito! Gracias por tu compra.', 'success');
+                cart = [];
+                renderCart();
+                paymentForm.reset();
+            }, 1000);
+        };
+
+        // --- Event Listeners ---
+        productList.addEventListener('click', (e) => {
+            if (e.target.classList.contains('add-to-cart-btn')) {
+                const productId = parseInt(e.target.dataset.productId);
+                addToCart(productId);
+            }
+        });
+
+        cartButton.addEventListener('click', () => toggleModal(cartModal, true));
+        closeCartModalButton.addEventListener('click', () => toggleModal(cartModal, false));
+        
+        checkoutButton.addEventListener('click', () => {
+            toggleModal(cartModal, false);
+            toggleModal(paymentModal, true);
+        });
+        
+        cancelPaymentButton.addEventListener('click', () => toggleModal(paymentModal, false));
+        paymentModal.querySelector('.modal-backdrop').addEventListener('click', () => toggleModal(paymentModal, false));
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            submitContactForm({ name: e.target.name.value, email: e.target.email.value, message: e.target.message.value });
+        });
+
+        paymentForm.addEventListener('submit', handlePayment);
+
+        // --- Inicialización ---
+        fetchAndRenderProducts();
+        renderCart();
+    });
+    </script>
+</body>
+</html>
+
